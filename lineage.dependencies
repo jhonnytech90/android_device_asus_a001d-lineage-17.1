@@ -1,0 +1,11 @@
+[
+  {
+    "repository": "android_device_asus_msm8953-common",
+    "target_path": "device/asus/msm8953-common"
+  },
+  {
+    "remote":"github",
+    "repository": "Sukrut4778/kernel_asus_a001d",
+    "target_path": "kernel/asus/msm8953"
+  }
+]
