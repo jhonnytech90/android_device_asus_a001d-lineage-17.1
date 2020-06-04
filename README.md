@@ -14,7 +14,7 @@ Android | 8.1
 Battery | 4000 mAh
 Display | 1080 x 2280 pixels, 6.26
 Rear Camera  | 12 Mp + 5 Mp + 8 Mp
-Front Camera | 5 MP
+Front Camera | 8 MP
 
 ## Device picture
 
