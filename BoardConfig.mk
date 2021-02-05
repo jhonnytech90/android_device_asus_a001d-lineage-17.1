@@ -14,39 +14,70 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/asys/a001d
+DEVICE_PATH := device/asus/A001D
 
-# Inherit from common msm8953-common
--include device/a001d/msm8953-common/BoardConfigCommon.mk
+# For building with minimal manifest
+ALLOW_MISSING_DEPENDENCIES := true
 
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
+# Architecture
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := generic
 
-# Kernel
-TARGET_KERNEL_VERSION := 3.18
-TARGET_KERNEL_SOURCE := kernel/a001d/msm8953
-TARGET_KERNEL_CONFIG := a001d-perf_defconfig
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := generic
+TARGET_BOARD_SUFFIX := _64
+TARGET_USES_64_BIT_BINDER := true
 
-# Filesystem
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+# Assert
+TARGET_OTA_ASSERT_DEVICE := A001D
+
+# File systems
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864 # This is the maximum known partition size, but it can be higher, so we just omit it
+BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 TARGET_COPY_OUT_VENDOR := vendor
 
-# Partitions
-BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 25765043200 # 25765059584 - 16384
-BOARD_VENDORIMAGE_PARTITION_SIZE := 536870912
+# Kernel
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbconfigfs=false buildvariant=user
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
+BOARD_BOOTIMG_HEADER_VERSION := 1
+BOARD_KERNEL_BASE := 0x80000000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_RAMDISK_OFFSET := 0x01000000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_SOURCE := kernel/asus/A001D
+TARGET_KERNEL_CONFIG := msm_defconfig
 
-# Power
-#TARGET_USES_INTERACTION_BOOST := true
-TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
+# Ramdisk compression
+#LZMA_RAMDISK_TARGETS := recovery
 
-# RIL
-DISABLE_RILD_OEM_HOOK := true
-ENABLE_VENDOR_RIL_SERVICE := true
+# Platform
+TARGET_BOARD_PLATFORM := msm8953
 
-# Vendor security Patch
-VENDOR_SECURITY_PATCH := 2020-05-05
+# Hack: prevent anti rollback
+PLATFORM_SECURITY_PATCH := 2099-12-31
+PLATFORM_VERSION := 16.1.0
 
-# Inherit from the proprietary version
--include vendor/asus/a001d/BoardConfigVendor.mk
+# TWRP Configuration
+TW_THEME := portrait_hdpi
+TW_EXTRA_LANGUAGES := true
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_USE_TOOLBOX := true
