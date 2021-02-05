@@ -26,9 +26,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := a001d
-PRODUCT_NAME := lineage_a001d
+PRODUCT_DEVICE := A001D
+PRODUCT_NAME := lineage_A001D
 PRODUCT_BRAND := asus
-PRODUCT_MODEL := Asus Zenfone Max Shot
+PRODUCT_MODEL := Asus Zenfone Max Shot/Shot Plus/PM2
 PRODUCT_MANUFACTURER := asus
-PRODUCT_RELEASE_NAME := Asus Zenfone Max Shot
+PRODUCT_RELEASE_NAME := Asus Zenfone Max Shot/Shot Plus/PM2
